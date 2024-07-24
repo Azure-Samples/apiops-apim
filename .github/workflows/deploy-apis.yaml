@@ -19,13 +19,14 @@ jobs:
       APIM_INSTANCE: euw-int-ai-dev-genai-apim
       ENVIRONMENT: dev
     steps:
-      - name: 'Az CLI login using OIDC'
-        uses: azure/login@v1
+      - name: 'Az CLI login '
+        uses: azure/login@v2
         with:
           client-id: ${{ secrets.DEV_CLIENT_ID }}
           tenant-id: ${{ secrets.DEV_TENANT_ID }}
           subscription-id: ${{ secrets.DEV_SUBSCRIPTION_ID }}
-
+          auth-type: SERVICE_PRINCIPAL
+          enable-AzPSSession: true
       - name: 'Run az commands'
         run: |
           az account show

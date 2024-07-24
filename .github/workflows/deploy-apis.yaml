@@ -3,11 +3,12 @@ name: Deploy APIs to APIM
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - 'apis/**'
       - 'environments/**'
       - 'deployment/**'
+  workflow_dispatch:
 
 jobs:
   deploy:

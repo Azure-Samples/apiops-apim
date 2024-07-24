@@ -1,0 +1,50 @@
+name: Deploy APIs to APIM
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apis/**'
+      - 'environments/**'
+      - 'deployment/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      RESOURCE_GROUP: ${{ secrets.DEV_RESOURCE_GROUP }}
+      SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
+      APIM_INSTANCE: euw-int-ai-dev-genai-apim
+      ENVIRONMENT: dev
+    steps:
+      - name: 'Az CLI login using OIDC'
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.DEV_CLIENT_ID }}
+          tenant-id: ${{ secrets.DEV_TENANT_ID }}
+          subscription-id: ${{ secrets.DEV_SUBSCRIPTION_ID }}
+
+      - name: 'Run az commands'
+        run: |
+          az account show
+          az group list
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Deploy APIs
+        env:
+          ENVIRONMENT: ${{ matrix.environment }}
+          APIM_INSTANCE: ${{ matrix.apim_instance }}
+        run: |
+          python api_management/main.py

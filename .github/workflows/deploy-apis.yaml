@@ -1,0 +1,43 @@
+name: Deploy APIs to APIM
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apis/**'
+      - 'environments/**'
+      - 'deployment/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
+      SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+    strategy:
+      matrix:
+        environment: [dev, prod]
+        apim_instance: [apim1, apim2]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Deploy APIs
+        env:
+          ENVIRONMENT: ${{ matrix.environment }}
+          APIM_INSTANCE: ${{ matrix.apim_instance }}
+        run: |
+          python api_management/main.py

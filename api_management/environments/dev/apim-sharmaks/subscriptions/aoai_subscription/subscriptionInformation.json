@@ -1,0 +1,6 @@
+{
+    "properties": {
+        "displayName": "testsub",
+        "scope": "/subscriptions/1640ab47-b036-4934-bdcb-937d79e45473/resourceGroups/sitecore-sharmaks-rg/providers/Microsoft.ApiManagement/service/apim-sharmaks/products/starter"
+    }
+}

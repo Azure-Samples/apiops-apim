@@ -6,6 +6,7 @@ from deployment.builders.builder_base import BuilderBase
 
 logger = get_logger()
 
+
 class ExternalPolicyBuilder(BuilderBase):
     def create(self, environment):
         api_folder_base = os.path.join(
@@ -30,7 +31,7 @@ class ExternalPolicyBuilder(BuilderBase):
                 service_name=self.apim_instance,
                 api_id=resource_name,
                 policy_id="policy",
-                if_match="*"
+                if_match="*",
             )
             logger.info(f"Deleted external policy for {resource_name}")
         except Exception as e:
@@ -38,11 +39,16 @@ class ExternalPolicyBuilder(BuilderBase):
             raise
 
     def update_api_policy(self, api_id, policy):
-        policy_parameters = {"format": "xml", "value": policy}
+        logger.info(f"Updating policy for API {api_id}")
         self.client.api_policy.create_or_update(
             resource_group_name=self.resource_group,
             service_name=self.apim_instance,
             api_id=api_id,
             policy_id="policy",
-            parameters=policy_parameters,
+            parameters={
+                "properties": {
+                    "format": "rawxml",
+                    "value": policy,
+                }
+            },
         )

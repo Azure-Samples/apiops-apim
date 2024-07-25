@@ -68,16 +68,22 @@ class ProductBuilder(BuilderBase):
             raise
 
     def update_product_policy(self, product_id, policy):
-        
-        self.client.product_policy.create_or_update(
-            resource_group_name=self.resource_group,
-            service_name=self.apim_instance,
-            product_id=product_id,
-            policy_id="policy",
-            parameters={
-                        "properties": {
-                            "format": "xml",
-                            "value": policy,
-                        }
-            },
-        )
+        try:
+
+            # Update the policy
+            self.client.product_policy.create_or_update(
+                resource_group_name=self.resource_group,
+                service_name=self.apim_instance,
+                product_id=product_id,
+                policy_id="policy",
+                parameters={
+                    "properties": {
+                        "format": "rawxml",
+                        "value": policy
+                    }
+                },
+            )
+            logger.info(f"Successfully updated policy for product {product_id}")
+        except Exception as e:
+            logger.error(f"Error updating policy for product {product_id}: {e}")
+            raise

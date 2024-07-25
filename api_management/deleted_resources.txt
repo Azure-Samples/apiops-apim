@@ -1,1 +1,0 @@
-D       environments/dev/apim-sharmaks/products/starter/policy.xml

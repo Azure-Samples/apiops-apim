@@ -46,6 +46,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Identify deleted files
+        id: deleted_files
+        run: |
+          git diff --name-status HEAD^ HEAD | grep '^D' > deleted_files.txt || true
+          cat deleted_files.txt
+
       - name: Deploy APIs
         env:
           APIM_INSTANCE: euw-int-ai-dev-genai-apim

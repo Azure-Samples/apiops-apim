@@ -47,11 +47,14 @@ if __name__ == "__main__":
 
         # Handle deleted resources
         if args.deleted_files:
-            with open(args.deleted_files) as f:
-                deleted_files = f.readlines()
-            delete_resources(
-                client, resource_group, apim_instance, deleted_files, builder_factory
-            )
+            if os.path.exists(args.deleted_files):
+                with open(args.deleted_files) as f:
+                    deleted_files = f.readlines()
+                delete_resources(
+                    client, resource_group, apim_instance, deleted_files, builder_factory
+                )
+            else:
+                print(f"The file {args.deleted_files} does not exist.")
 
         # Deploy resources
         builders = [

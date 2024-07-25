@@ -1,27 +1,42 @@
-name: Deploy APIs to APIM
+name: Deploy to APIM
 
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - 'apis/**'
       - 'environments/**'
       - 'deployment/**'
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-      RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
-      SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
-    strategy:
-      matrix:
-        environment: [dev, prod]
-        apim_instance: [apim1, apim2]
-
+      RESOURCE_GROUP: ${{ secrets.DEV_RESOURCE_GROUP }}
+      SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
+      APIM_INSTANCE: euw-int-ai-dev-genai-apim
+      ENVIRONMENT: dev
     steps:
+      - name: 'Az CLI login '
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.DEV_CLIENT_ID }}
+          tenant-id: ${{ secrets.DEV_TENANT_ID }}
+          subscription-id: ${{ secrets.DEV_SUBSCRIPTION_ID }}
+          auth-type: SERVICE_PRINCIPAL
+          enable-AzPSSession: true
+
+      - name: 'Run az commands'
+        run: |
+          az account show
+          az group list
+
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -35,9 +50,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Identify deleted files
+        id: deleted_files
+        run: |
+          git fetch origin
+          git diff --name-status HEAD^ HEAD | grep '^D' > deleted_files.txt || true
+          cat deleted_files.txt
+
       - name: Deploy APIs
         env:
-          ENVIRONMENT: ${{ matrix.environment }}
-          APIM_INSTANCE: ${{ matrix.apim_instance }}
+          APIM_INSTANCE: euw-int-ai-dev-genai-apim
+          ENVIRONMENT: dev
         run: |
-          python api_management/main.py
+          cd api_management
+          python main.py

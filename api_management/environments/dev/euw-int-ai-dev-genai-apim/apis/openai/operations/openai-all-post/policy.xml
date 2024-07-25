@@ -1,0 +1,45 @@
+<!--
+    - Policies are applied in the order they appear.
+    - Position <base/> inside a section to inherit policies from the outer scope.
+    - Comments within policies are not preserved.
+-->
+<!-- Add policies as children to the <inbound>, <outbound>, <backend>, and <on-error> elements -->
+<policies>
+    <!-- Throttle, authorize, validate, cache, or transform the requests -->
+    <inbound>
+        <base />
+        <azure-openai-emit-token-metric namespace="AzureOpenAI">
+            <dimension name="Client IP" value="@(context.Request.IpAddress)" />
+            <dimension name="API ID" />
+        </azure-openai-emit-token-metric>
+    </inbound>
+    <!-- Control if and how the requests are forwarded to services  -->
+    <backend>
+        <!--<base />-->
+        <include-fragment fragment-id="retry-with-payg" />
+    </backend>
+    <!-- Customize the responses -->
+    <outbound>
+        <base />
+        <set-variable name="response" value="@(context.Response.Body.As<String>(preserveContent: true))" />
+        <set-variable name="id" value="@(context.Response.Headers.GetValueOrDefault("apim-request-id",""))" />
+        <set-variable name="request-url" value="@(context.Request.Url.ToString())" />
+        <set-variable name="original-request-url" value="@(context.Request.OriginalUrl.ToString())" />
+        <set-header name="x-request-url" exists-action="append">
+            <value>@((String)context.Variables["request-url"])</value>
+        </set-header>
+        <set-header name="x-original-request-url" exists-action="append">
+            <value>@((String)context.Variables["original-request-url"])</value>
+        </set-header>
+        <set-header name="x-subscription-name" exists-action="append">
+            <value>@((String)context.Subscription.Name)</value>
+        </set-header>
+        <set-header name="x-product-name" exists-action="append">
+            <value>@((String)context.Product.Name)</value>
+        </set-header>
+    </outbound>
+    <!-- Handle exceptions and customize error responses  -->
+    <on-error>
+        <base />
+    </on-error>
+</policies>

@@ -13,14 +13,10 @@
         </trace>
         <set-variable name="backend-pool" value="euw-int-ai-dev-genai-01-aoai" />
         <set-variable name="standby-pool" value="euw-int-ai-dev-genai-02-aoai" />
-        <choose>
-            <when condition="@(context.Request.Headers.GetValueOrDefault("skip-rate-limit") == "true")">
-                <set-variable name="backend-pool" value="@((string)context.Variables["standby-pool"])" />
-            </when>
-            <otherwise>
+        
                 <azure-openai-token-limit counter-key="@(context.Subscription.Id)" tokens-per-minute="10000" estimate-prompt-tokens="false" remaining-tokens-header-name="x-oai-tpm-remaining-tokens" tokens-consumed-header-name="x-oai-tpm-tokens-consumed" />
                 <quota-by-key calls="1000" renewal-period="300" counter-key="@(context.Subscription.Id)" />
-            </otherwise>
+           
         </choose>
     </inbound>
     <!-- Control if and how the requests are forwarded to services  -->

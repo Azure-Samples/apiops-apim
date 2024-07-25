@@ -1,13 +1,20 @@
 import os
+from azure.mgmt.apimanagement import ApiManagementClient
 from deployment.utils import load_json_file, load_text_file
 from deployment.logger import get_logger
-from deployment.builders.builder_base import BuilderBase
 
 logger = get_logger()
 
 
-class ApiBuilder(BuilderBase):
-    def create(self, environment: str):
+class ApiBuilder:
+    def __init__(
+        self, client: ApiManagementClient, resource_group: str, apim_instance: str
+    ):
+        self.client = client
+        self.resource_group = resource_group
+        self.apim_instance = apim_instance
+
+    def deploy(self, environment):
         api_folder_base = os.path.join(
             "environments", environment, self.apim_instance, "apis"
         )
@@ -33,14 +40,4 @@ class ApiBuilder(BuilderBase):
                 logger.info(f"Successfully deployed API {api_name}")
         except Exception as e:
             logger.error(f"Error deploying API {api_name}: {e}")
-            raise
-
-    def delete(self, resource_name: str):
-        try:
-            self.client.api.delete(
-                self.resource_group, self.apim_instance, resource_name, if_match="*"
-            )
-            logger.info(f"Deleted API {resource_name}")
-        except Exception as e:
-            logger.error(f"Error deleting API {resource_name}: {e}")
             raise

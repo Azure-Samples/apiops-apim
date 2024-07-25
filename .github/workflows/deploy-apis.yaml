@@ -57,4 +57,5 @@ jobs:
           APIM_INSTANCE: euw-int-ai-dev-genai-apim
           ENVIRONMENT: dev
         run: |
-          python api_management/main.py
+          cd api_management
+          python main.py

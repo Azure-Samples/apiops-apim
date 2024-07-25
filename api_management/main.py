@@ -59,8 +59,8 @@ if __name__ == "__main__":
         # Deploy resources
         builders = [
             "apis",
-            "products",
             "policy_fragments",
+            "products",
             "operation_policy",
             "external_policy",
             "subscription",

@@ -27,7 +27,7 @@ class PolicyFragmentBuilder(BuilderBase):
                     parameters={
                         "properties": {
                             "description": fragment_info.get("description"),
-                            "format": "xml",
+                            "format": "rawxml",
                             "value": policy,
                         }
                     },

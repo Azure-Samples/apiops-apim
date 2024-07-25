@@ -57,12 +57,16 @@ class OperationPolicyBuilder(BuilderBase):
             raise
 
     def update_operation_policy(self, api_id, operation_id, policy):
-        policy_parameters = {"format": "xml", "value": policy}
         self.client.api_operation_policy.create_or_update(
             resource_group_name=self.resource_group,
             service_name=self.apim_instance,
             api_id=api_id,
             operation_id=operation_id,
             policy_id="policy",
-            parameters=policy_parameters,
+            parameters={
+                "properties": {
+                    "format": "xml",
+                    "value": policy,
+                }
+            },
         )

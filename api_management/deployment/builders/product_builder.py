@@ -68,11 +68,16 @@ class ProductBuilder(BuilderBase):
             raise
 
     def update_product_policy(self, product_id, policy):
-        policy_parameters = {"format": "xml", "value": policy}
+        
         self.client.product_policy.create_or_update(
             resource_group_name=self.resource_group,
             service_name=self.apim_instance,
             product_id=product_id,
             policy_id="policy",
-            parameters=policy_parameters,
+            parameters={
+                        "properties": {
+                            "format": "xml",
+                            "value": policy,
+                        }
+            },
         )

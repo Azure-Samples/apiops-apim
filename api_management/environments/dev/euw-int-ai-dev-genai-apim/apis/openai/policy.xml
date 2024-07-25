@@ -17,27 +17,21 @@
             <dimension name="Client IP" value="@(context.Request.IpAddress)" />
             <dimension name="API ID" />
         </azure-openai-emit-token-metric>
+        <include-fragment fragment-id="streaming-support" />
+        <include-fragment fragment-id="usage-tracking-with-appinsights" />
     </inbound>
     <!-- Control if and how the requests are forwarded to services  -->
     <backend>
-        <base />
+        <include-fragment fragment-id="retry-with-payg" />
     </backend>
     <!-- Customize the responses -->
     <outbound>
         <base />
-        <!--<log-to-eventhub logger-id="apimeventbuslogger">@{
-                return new JObject(
-                    new JProperty("EventTime", DateTime.UtcNow.ToString()),
-                    new JProperty("ServiceName", context.Deployment.ServiceName),
-                    new JProperty("RequestId", context.RequestId),
-                    new JProperty("RequestIp", context.Request.IpAddress),
-                    new JProperty("OperationName", context.Operation.Name),
-                    new JProperty("StatusCode", context.Response.StatusCode)
-                ).ToString();
-            }</log-to-eventhub> -->
+        <include-fragment fragment-id="add-common-headers" />
     </outbound>
     <!-- Handle exceptions and customize error responses  -->
     <on-error>
         <base />
+        <include-fragment fragment-id="common-error-headers" />
     </on-error>
 </policies>

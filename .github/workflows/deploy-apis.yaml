@@ -9,9 +9,11 @@ on:
       - 'environments/**'
       - 'deployment/**'
   workflow_dispatch:
+
 permissions:
   id-token: write
   contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -29,10 +31,12 @@ jobs:
           subscription-id: ${{ secrets.DEV_SUBSCRIPTION_ID }}
           auth-type: SERVICE_PRINCIPAL
           enable-AzPSSession: true
+
       - name: 'Run az commands'
         run: |
           az account show
           az group list
+
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -49,6 +53,7 @@ jobs:
       - name: Identify deleted files
         id: deleted_files
         run: |
+          git fetch origin
           git diff --name-status HEAD^ HEAD | grep '^D' > deleted_files.txt || true
           cat deleted_files.txt
 

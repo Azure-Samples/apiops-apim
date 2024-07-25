@@ -5,11 +5,9 @@ on:
     branches:
       - master
     paths:
-      - 'apis/**'
       - 'environments/**'
-      - 'deployment/**'
   workflow_dispatch:
-
+  
 permissions:
   id-token: write
   contents: read
@@ -39,6 +37,8 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
 
       - name: Setup Python
         uses: actions/setup-python@v2
@@ -53,8 +53,7 @@ jobs:
       - name: Identify deleted files
         id: deleted_files
         run: |
-          git fetch origin
-          git diff --name-status HEAD^ HEAD | grep '^D' > deleted_files.txt || true
+          git diff --name-status --diff-filter=D > deleted_files.txt || true
           cat deleted_files.txt
 
       - name: Deploy APIs

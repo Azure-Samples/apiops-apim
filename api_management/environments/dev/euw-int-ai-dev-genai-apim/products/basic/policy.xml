@@ -8,6 +8,9 @@
     <!-- Throttle, authorize, validate, cache, or transform the requests -->
     <inbound>
         <base />
+        <trace source="Basic product is called" severity="information">
+            <message>Subscription @(context.Subscription.Name) called free product</message>
+        </trace>
         <set-variable name="backend-pool" value="euw-int-ai-dev-genai-01-aoai" />
         <set-variable name="standby-pool" value="euw-int-ai-dev-genai-02-aoai" />
         <choose>

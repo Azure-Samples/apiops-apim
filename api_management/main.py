@@ -60,9 +60,9 @@ if __name__ == "__main__":
         builders = [
             "apis",
             "products",
+            "policy_fragments",
             "operation_policy",
             "external_policy",
-            "policy_fragments",
             "subscription",
         ]
         for builder_type in builders:

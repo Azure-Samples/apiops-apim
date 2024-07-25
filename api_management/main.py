@@ -4,14 +4,11 @@ from azure.identity import DefaultAzureCredential
 from azure.mgmt.apimanagement import ApiManagementClient
 from deployment.factory import BuilderFactory
 from deployment.logger import get_logger
-from deployment.utils import load_json_file
 
 logger = get_logger()
 
 
-def delete_resources(
-    client, resource_group, apim_instance, deleted_files, builder_factory
-):
+def delete_resources(deleted_files, builder_factory):
     for line in deleted_files:
         path = line.strip().split("environments/")[1]
         parts = path.split("/")
@@ -51,7 +48,8 @@ if __name__ == "__main__":
                 with open(args.deleted_files) as f:
                     deleted_files = f.readlines()
                 delete_resources(
-                    client, resource_group, apim_instance, deleted_files, builder_factory
+                    deleted_files,
+                    builder_factory,
                 )
             else:
                 print(f"The file {args.deleted_files} does not exist.")
@@ -64,6 +62,8 @@ if __name__ == "__main__":
             "operation_policy",
             "external_policy",
             "subscription",
+            "loggers",
+            "diagnostics",
         ]
         for builder_type in builders:
             builder = builder_factory.get_builder(builder_type)

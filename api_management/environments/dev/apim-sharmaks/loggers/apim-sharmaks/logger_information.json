@@ -1,0 +1,10 @@
+{
+    "properties": {
+      "loggerType": "applicationInsights",
+      "credentials": {
+        "instrumentationKey": "d8ff0fa7-81bc-40b1-9b9b-c304ae4ad367"
+      },
+      "isBuffered": true,
+      "resourceId": "/subscriptions/1640ab47-b036-4934-bdcb-937d79e45473/resourceGroups/rg-apimpgs-dev-eastus/providers/Microsoft.Insights/components/ai-apimpgs-dev-eastus"
+    }
+  }

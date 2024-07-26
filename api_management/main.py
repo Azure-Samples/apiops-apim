@@ -62,7 +62,6 @@ if __name__ == "__main__":
             "operation_policy",
             "external_policy",
             "subscription",
-            "loggers",
             "diagnostics",
         ]
         for builder_type in builders:

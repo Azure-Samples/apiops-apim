@@ -1,0 +1,36 @@
+{
+    "properties": {
+        "loggerId": "{{euw-int-ai-dev-genai-apim-apim-appinsightlogger-id}}",
+        "alwaysLog": "allErrors",
+        "backend": {
+            "request": {
+                "dataMasking": {
+                    "queryParams": [
+                        {
+                            "mode": "Hide",
+                            "value": "*"
+                        }
+                    ]
+                }
+            }
+        },
+        "frontend": {
+            "request": {
+                "dataMasking": {
+                    "queryParams": [
+                        {
+                            "mode": "Hide",
+                            "value": "*"
+                        }
+                    ]
+                }
+            }
+        },
+        "httpCorrelationProtocol": "Legacy",
+        "logClientIp": true,
+        "sampling": {
+            "percentage": 100,
+            "samplingType": "fixed"
+        }
+    }
+}

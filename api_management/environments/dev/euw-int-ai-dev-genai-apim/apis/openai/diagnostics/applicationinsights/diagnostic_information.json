@@ -1,6 +1,6 @@
 {
     "properties": {
-        "loggerId": "{{euw-int-ai-dev-genai-apim-apim-appinsightlogger-id}}",
+        "loggerId": "/subscriptions/9a4d2d39-1755-4be8-8ea6-b3bf32141bf7/resourceGroups/rg-ai-euw-dev/providers/Microsoft.ApiManagement/service/euw-int-ai-dev-genai-apim/loggers/apim-appinsightlogger",
         "alwaysLog": "allErrors",
         "backend": {
             "request": {

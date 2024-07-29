@@ -55,7 +55,7 @@ jobs:
         run: |
           git fetch --depth=2 origin master
           git diff-tree --no-commit-id --name-only --diff-filter=D -r HEAD > api_management/deleted_files.txt
-          cat deleted_files.txt
+          cat  api_management/deleted_files.txt
 
       - name: Deploy APIs
         env:

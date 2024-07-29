@@ -15,17 +15,6 @@ class ProductBuilder(BuilderBase):
         try:
             for product_name in os.listdir(product_folder_base):
                 product_path = os.path.join(product_folder_base, product_name)
-                product_info = load_json_file(
-                    os.path.join(product_path, "product_information.json")
-                )
-
-                response = self.client.product.create_or_update(
-                    resource_group_name=self.resource_group,
-                    service_name=self.apim_instance,
-                    product_id=product_name,
-                    parameters=product_info,
-                    if_match="*",
-                )
 
                 policy_path = os.path.join(product_path, "policy.xml")
                 if os.path.exists(policy_path):
@@ -56,12 +45,6 @@ class ProductBuilder(BuilderBase):
                 if_match="*",
             )
 
-            self.client.product.delete(
-                resource_group_name=self.resource_group,
-                service_name=self.apim_instance,
-                product_id=resource_name,
-                if_match="*",
-            )
             logger.info(f"Deleted product {resource_name}")
         except Exception as e:
             logger.error(f"Error deleting product {resource_name}: {e}")

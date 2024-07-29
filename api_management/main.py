@@ -23,7 +23,7 @@ if __name__ == "__main__":
         parser.add_argument(
             "--deleted-files",
             help="Path to the file containing deleted files list",
-            default="deleted_resources.txt",
+            default="deleted_files.txt",
         )
         args = parser.parse_args()
 

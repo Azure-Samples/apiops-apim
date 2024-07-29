@@ -17,7 +17,7 @@
         },
         "frontend": {
             "request": {
-                "dataMasking": 
+                "dataMasking": {
                     "queryParams": [
                         {
                             "mode": "Hide",

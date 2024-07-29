@@ -3,7 +3,6 @@ from deployment.builders.product_builder import ProductBuilder
 from deployment.builders.operation_policy_builder import OperationPolicyBuilder
 from deployment.builders.external_policy_builder import ExternalPolicyBuilder
 from deployment.builders.policy_fragment_builder import PolicyFragmentBuilder
-from deployment.builders.subscription_builder import SubscriptionBuilder
 from deployment.builders.diagnostic_builder import DiagnosticBuilder
 
 
@@ -18,7 +17,6 @@ class BuilderFactory:
             "operation_policy": OperationPolicyBuilder,
             "external_policy": ExternalPolicyBuilder,
             "policy_fragments": PolicyFragmentBuilder,
-            "subscription": SubscriptionBuilder,
             "diagnostics": DiagnosticBuilder,
         }
 

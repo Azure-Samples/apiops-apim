@@ -63,8 +63,7 @@ if __name__ == "__main__":
             "policy_fragments",
             "products",
             "operation_policy",
-            "external_policy",
-            "subscription"
+            "external_policy"
         ]
         for builder_type in builders:
             builder = builder_factory.get_builder(builder_type)

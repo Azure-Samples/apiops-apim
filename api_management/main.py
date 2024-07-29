@@ -44,9 +44,12 @@ if __name__ == "__main__":
 
         # Handle deleted resources
         if args.deleted_files:
+            logger.info("Deleted files list provided. Deleting resources.")
             if os.path.exists(args.deleted_files):
+                logger.info(f"Reading deleted files from {args.deleted_files}")
                 with open(args.deleted_files) as f:
                     deleted_files = f.readlines()
+                logger.info(f"Deleting {len(deleted_files)} resources")
                 delete_resources(
                     deleted_files,
                     builder_factory,

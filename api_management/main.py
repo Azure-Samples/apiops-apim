@@ -9,10 +9,15 @@ logger = get_logger()
 
 
 def delete_resources(deleted_files, builder_factory):
+    unique_resources = set()
+
     for line in deleted_files:
         path = line.strip().split("environments/")[1]
         parts = path.split("/")
         resource_type, resource_name = parts[2], parts[3]
+        unique_resources.add((resource_type, resource_name))
+
+    for resource_type, resource_name in unique_resources:
         builder = builder_factory.get_builder(resource_type)
         builder.delete(resource_name)
 
@@ -63,7 +68,7 @@ if __name__ == "__main__":
             "policy_fragments",
             "products",
             "operation_policy",
-            "external_policy"
+            "external_policy",
         ]
         for builder_type in builders:
             builder = builder_factory.get_builder(builder_type)

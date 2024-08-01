@@ -7,7 +7,7 @@
       "openidAuthenticationSettings": []
     },
     "isCurrent": true,
-    "displayName": "OpenAI",
+    "displayName": "OpenAI-App",
     "protocols": [
       "https"
     ],

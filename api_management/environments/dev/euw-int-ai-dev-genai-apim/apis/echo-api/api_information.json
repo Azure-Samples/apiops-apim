@@ -1,6 +1,6 @@
 {
   "properties": {
-    "path": "/echo",
+    "path": "/echo1",
     "apiRevision": "1",
     "authenticationSettings": {
       "oAuth2AuthenticationSettings": [],

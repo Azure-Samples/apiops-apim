@@ -85,6 +85,7 @@ class ApiBuilder(BuilderBase):
                 self.resource_group, self.apim_instance, resource_name, if_match="*"
             )
             logger.info(f"Deleted API {resource_name}")
+            logger.info("Please ensure the linked API resources are also deleted.")
         except Exception as e:
             logger.error(f"Error deleting API {resource_name}: {e}")
             raise

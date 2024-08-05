@@ -9,7 +9,7 @@ paths:
   /*:
     post:
       summary: OpenAI Image Generate
-      operationId: imagegen
+      operationId: imagegen # operationId must be unique and same as folder name under the operations folder
       responses:
         '200':
           description:

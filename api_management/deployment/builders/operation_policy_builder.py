@@ -62,11 +62,11 @@ class OperationPolicyBuilder(BuilderBase):
             service_name=self.apim_instance,
             api_id=api_id,
             operation_id=operation_id,
-            policy_id="policy",
-            parameters={
-                "properties": {
-                    "format": "rawxml",
-                    "value": policy,
-                }
-            },
+            policy_id="policy"
+            # parameters={
+            #     "properties": {
+            #         "format": "rawxml",
+            #         "value": policy,
+            #     }
+            # },
         )

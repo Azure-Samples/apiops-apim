@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - master
-    paths:
-      - 'environments/**'
   workflow_dispatch:
   
 permissions:
@@ -21,7 +19,7 @@ jobs:
       APIM_INSTANCE: euw-int-ai-dev-genai-apim
       ENVIRONMENT: dev
     steps:
-      - name: 'Az CLI login '
+      - name: 'Az CLI login'
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.DEV_CLIENT_ID }}
@@ -50,11 +48,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Identify deleted files
-        id: deleted_files
+      - name: Identify changed files
+        id: changed_files
         run: |
-          git diff --name-status --diff-filter=D > deleted_files.txt || true
-          cat deleted_files.txt
+          git fetch --depth=2 origin master
+          git diff-tree --no-commit-id --name-only --diff-filter=D -r HEAD > api_management/deleted_files.txt
+          cat  api_management/deleted_files.txt
 
       - name: Deploy APIs
         env:

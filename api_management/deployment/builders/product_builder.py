@@ -15,17 +15,6 @@ class ProductBuilder(BuilderBase):
         try:
             for product_name in os.listdir(product_folder_base):
                 product_path = os.path.join(product_folder_base, product_name)
-                product_info = load_json_file(
-                    os.path.join(product_path, "product_information.json")
-                )
-
-                response = self.client.product.create_or_update(
-                    resource_group_name=self.resource_group,
-                    service_name=self.apim_instance,
-                    product_id=product_name,
-                    parameters=product_info,
-                    if_match="*",
-                )
 
                 policy_path = os.path.join(product_path, "policy.xml")
                 if os.path.exists(policy_path):
@@ -35,6 +24,7 @@ class ProductBuilder(BuilderBase):
                 apis_folder = os.path.join(product_path, "apis")
                 if os.path.exists(apis_folder):
                     for api_name in os.listdir(apis_folder):
+                        logger.info("Creating product %s with API %s", product_name, api_name)
                         self.client.product_api.create_or_update(
                             resource_group_name=self.resource_group,
                             service_name=self.apim_instance,
@@ -56,23 +46,28 @@ class ProductBuilder(BuilderBase):
                 if_match="*",
             )
 
-            self.client.product.delete(
-                resource_group_name=self.resource_group,
-                service_name=self.apim_instance,
-                product_id=resource_name,
-                if_match="*",
-            )
             logger.info(f"Deleted product {resource_name}")
         except Exception as e:
             logger.error(f"Error deleting product {resource_name}: {e}")
             raise
 
     def update_product_policy(self, product_id, policy):
-        policy_parameters = {"format": "xml", "value": policy}
-        self.client.product_policy.create_or_update(
-            resource_group_name=self.resource_group,
-            service_name=self.apim_instance,
-            product_id=product_id,
-            policy_id="policy",
-            parameters=policy_parameters,
-        )
+        try:
+
+            # Update the policy
+            self.client.product_policy.create_or_update(
+                resource_group_name=self.resource_group,
+                service_name=self.apim_instance,
+                product_id=product_id,
+                policy_id="policy",
+                parameters={
+                    "properties": {
+                        "format": "rawxml",
+                        "value": policy
+                    }
+                },
+            )
+            logger.info(f"Successfully updated policy for product {product_id}")
+        except Exception as e:
+            logger.error(f"Error updating policy for product {product_id}: {e}")
+            raise

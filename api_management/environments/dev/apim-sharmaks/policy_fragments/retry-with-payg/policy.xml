@@ -5,7 +5,7 @@
 		</set-header>
 		<choose>
 			<when condition="@(context.Response.StatusCode == 429)">
-				<set-backend-service backend-id="@((string)context.Variables["standby-pool"])" />
+				<set-backend-service backend-id="standby-backend" />
 				<forward-request timeout="120" fail-on-error-status-code="true" buffer-response="false" />
 				<trace source="set-backend policy fragement" severity="information">
 					<message>@(String.Concat("Retrying the request with standby-backend"))</message>

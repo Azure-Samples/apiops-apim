@@ -1,0 +1,11 @@
+<!-- Policy fragment to use Pay As You Go (PAYG) endpoints when the PTU endpoints are busy.
+
+    should be used inside the <backend> section of the policy
+
+    Expected named values
+    - ptu-endpoint-1, payg-endpoint-1, payg-endpoint-2: The backend endpoints to be load balanced. -->
+<fragment>
+	<!-- Exponential retry policy: If the HTTP status code of the response is 300 or greater, the request is retried. 
+     Maximum retries: 3. Initial retry interval: 1 second. Maximum retry interval: 10 seconds. 
+     Retry interval increase per retry: 2 seconds -->
+</fragment>

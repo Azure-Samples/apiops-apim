@@ -1,0 +1,36 @@
+{
+    "properties": {
+        "loggerId": "/subscriptions/1640ab47-b036-4934-bdcb-937d79e45473/resourceGroups/sitecore-sharmaks-rg/providers/Microsoft.ApiManagement/service/apim-sharmaks/loggers/apim-sharmaks",
+        "alwaysLog": "allErrors",
+        "backend": {
+            "request": {
+                "dataMasking": {
+                    "queryParams": [
+                        {
+                            "mode": "Hide",
+                            "value": "*"
+                        }
+                    ]
+                }
+            }
+        },
+        "frontend": {
+            "request": {
+                "dataMasking": {
+                    "queryParams": [
+                        {
+                            "mode": "Hide",
+                            "value": "*"
+                        }
+                    ]
+                }
+            }
+        },
+        "httpCorrelationProtocol": "Legacy",
+        "logClientIp": true,
+        "sampling": {
+            "percentage": 100,
+            "samplingType": "fixed"
+        }
+    }
+}

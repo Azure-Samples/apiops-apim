@@ -33,8 +33,8 @@ if __name__ == "__main__":
         args = parser.parse_args()
 
         environment = os.getenv("ENVIRONMENT", "dev")
-        apim_instance = os.getenv("APIM_INSTANCE", "apim-sharmaks")
-        resource_group = os.getenv("RESOURCE_GROUP", "sitecore-sharmaks-rg")
+        apim_instance = os.getenv("APIM_INSTANCE", "apim-apimpgs-dev-eastus")
+        resource_group = os.getenv("RESOURCE_GROUP", "rg-apimpgs-dev-eastus")
         subscription_id = os.getenv(
             "SUBSCRIPTION_ID", "1640ab47-b036-4934-bdcb-937d79e45473"
         )

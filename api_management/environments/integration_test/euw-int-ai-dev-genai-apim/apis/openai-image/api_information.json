@@ -1,0 +1,21 @@
+{
+  "properties": {
+    "path": "openai/images",
+    "apiRevision": "1",
+    "authenticationSettings": {
+      "oAuth2AuthenticationSettings": [],
+      "openidAuthenticationSettings": []
+    },
+    "isCurrent": true,
+    "displayName": "OpenAI Image Generate",
+    "protocols": [
+      "https"
+    ],
+    "subscriptionKeyParameterNames": {
+      "header": "Ocp-Apim-Subscription-Key",
+      "query": "subscription-key"
+    },
+    "format": "openapi",
+    "subscriptionRequired": true
+  }
+}

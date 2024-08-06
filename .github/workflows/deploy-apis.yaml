@@ -5,7 +5,7 @@ on:
     branches:
       - master
   workflow_dispatch:
-  
+
 permissions:
   id-token: write
   contents: read
@@ -13,18 +13,14 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      RESOURCE_GROUP: ${{ secrets.DEV_RESOURCE_GROUP }}
-      SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
-      APIM_INSTANCE: euw-int-ai-dev-genai-apim
-      ENVIRONMENT: dev
+    environment: dev # This specifies the environment; adjust it accordingly
     steps:
       - name: 'Az CLI login'
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.DEV_CLIENT_ID }}
-          tenant-id: ${{ secrets.DEV_TENANT_ID }}
-          subscription-id: ${{ secrets.DEV_SUBSCRIPTION_ID }}
+          client-id: ${{ secrets.CLIENT_ID }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
           auth-type: SERVICE_PRINCIPAL
           enable-AzPSSession: true
 
@@ -41,7 +37,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
@@ -56,9 +52,11 @@ jobs:
           cat  api_management/deleted_files.txt
 
       - name: Deploy APIs
-        env:
-          APIM_INSTANCE: euw-int-ai-dev-genai-apim
-          ENVIRONMENT: dev
         run: |
           cd api_management
           python main.py
+        env:
+          RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
+          SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+          APIM_INSTANCE: ${{ vars.APIM_INSTANCE }}
+          ENVIRONMENT: ${{ vars.ENVIRONMENT }}

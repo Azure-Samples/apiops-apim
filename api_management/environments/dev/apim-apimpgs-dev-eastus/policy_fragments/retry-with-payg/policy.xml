@@ -1,0 +1,23 @@
+<fragment>
+	<retry condition="@(context.Response.StatusCode == 429)" count="3" interval="1" max-interval="10" delta="2">
+		<set-header name="Authorization" exists-action="override">
+					<value>@("Bearer " + (string)context.Variables["msi-access-token"])</value>
+		</set-header>
+		<choose>
+			<when condition="@(context.Response.StatusCode == 429)">
+				<set-backend-service backend-id="@((string)context.Variables["standby-pool"])" />
+				<forward-request timeout="120" fail-on-error-status-code="true" buffer-response="false" />
+				<trace source="set-backend policy fragement" severity="information">
+					<message>@(String.Concat("Retrying the request with standby-backend"))</message>
+				</trace>
+			</when>
+			<otherwise>
+				<set-backend-service backend-id="@((string)context.Variables["backend-pool"])" />
+				<forward-request timeout="120" fail-on-error-status-code="true" buffer-response="false" />
+				<trace source="set-backend policy fragement" severity="information">
+					<message>@(String.Concat("Backend is set to ::",context.Variables["backend-pool"]))</message>
+				</trace>
+			</otherwise>
+		</choose>
+	</retry>
+</fragment>

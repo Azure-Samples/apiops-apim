@@ -1,0 +1,28 @@
+openapi: 3.0.1
+info:
+  title: Azure OpenAI Embedding
+  description: ''
+  version: '1.0'
+servers:
+  - url: https://set-it-via-backend/openai
+paths:
+  /*:
+    post:
+      summary: OpenAI Embedding
+      operationId: embedding
+      responses:
+        '200':
+          description:
+components:
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      name: Ocp-Apim-Subscription-Key
+      in: header
+    apiKeyQuery:
+      type: apiKey
+      name: subscription-key
+      in: query
+security:
+  - apiKeyHeader: [ ]
+  - apiKeyQuery: [ ]

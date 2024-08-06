@@ -1,12 +1,12 @@
 name: Python Project Build and Test
 
 on:
-  pull_request:
-    branches:
-      - main
+  # pull_request:
+  #   branches:
+  #     - master
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-test:
@@ -19,6 +19,16 @@ jobs:
       APIM_INSTANCE: ${{ vars.APIM_INSTANCE }}
       ENVIRONMENT: ${{ vars.ENVIRONMENT }}
     steps:
+
+      - name: "Az CLI login"
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.CLIENT_ID }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
+          auth-type: SERVICE_PRINCIPAL
+          enable-AzPSSession: true
+
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -36,6 +46,7 @@ jobs:
       - name: Run Integration Tests
         shell: bash
         run: |
+          cd api_management
           pytest tests/integration --cov=.
 
       - name: Generate Coverage Report

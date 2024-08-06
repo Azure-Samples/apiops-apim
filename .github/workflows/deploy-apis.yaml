@@ -13,9 +13,9 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: dev # This specifies the environment; adjust it accordingly
+    environment: dev
     steps:
-      - name: 'Az CLI login'
+      - name: "Az CLI login"
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.CLIENT_ID }}
@@ -23,11 +23,6 @@ jobs:
           subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
           auth-type: SERVICE_PRINCIPAL
           enable-AzPSSession: true
-
-      - name: 'Run az commands'
-        run: |
-          az account show
-          az group list
 
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -37,7 +32,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |

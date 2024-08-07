@@ -49,7 +49,6 @@ jobs:
           RESOURCE_GROUP: rg-ai-euw-dev
         run: |
           cd api_management
-          pwd
           pytest tests/integeration/ --cov=.
 
       - name: Generate Coverage Report

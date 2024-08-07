@@ -55,7 +55,7 @@ class ApiBuilder(BuilderBase):
                         logger.info(
                             f"Successfully deployed diagnostic {diagnostic_name} for API {api_name}"
                         )
-                    return {"status": "success", "message": "API deployed successfully"}
+            return {"status": "success", "message": "API deployed successfully"}
 
         except HttpResponseError as e:
             logger.error(

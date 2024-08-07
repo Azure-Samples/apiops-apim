@@ -38,6 +38,8 @@ if __name__ == "__main__":
         subscription_id = os.getenv(
             "SUBSCRIPTION_ID", "1640ab47-b036-4934-bdcb-937d79e45473"
         )
+        
+        logger.info(f"Starting deployment for {environment} {apim_instance} {resource_group} {subscription_id}" )
 
         if not all([environment, apim_instance, resource_group, subscription_id]):
             raise ValueError("One or more required environment variables are missing")

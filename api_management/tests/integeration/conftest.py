@@ -52,34 +52,34 @@ def setup_and_teardown_api(builder_factory):
                 builder_factory.resource_group, builder_factory.apim_instance, api_id
             )
 
-# @pytest.fixture(scope="session", autouse=True)
-# def setup_and_teardown_product(builder_factory):
-    # product_builder = builder_factory.get_builder("products")
-    # environment = os.getenv("ENVIRONMENT", "integration_test")
-    # api_id = "openai"
+@pytest.fixture(scope="session", autouse=True)
+def setup_and_teardown_product(builder_factory):
+    product_builder = builder_factory.get_builder("products")
+    environment = os.getenv("ENVIRONMENT", "integration_test")
+    api_id = "openai"
     
-    # # Create Product
-    # result = product_builder.create(environment)
-    # if result is None:
-    #     pytest.fail("Product creation returned None")
-    # if result.get("status") == "error":
-    #     pytest.fail(f"Product creation failed: {result.get('message', 'Unknown error')}")
-    # else:
-    #     product_id = "basic"
-    #     response = list(product_builder.client.product_api.list_by_product(
-    #         builder_factory.resource_group, builder_factory.apim_instance, product_id
-    #     ))
-    #     assert any(api.id.endswith(api_id) for api in response)
-    #     assert response[0].id.endswith(api_id)
+    # Create Product
+    result = product_builder.create(environment)
+    if result is None:
+        pytest.fail("Product creation returned None")
+    if result.get("status") == "error":
+        pytest.fail(f"Product creation failed: {result.get('message', 'Unknown error')}")
+    else:
+        product_id = "basic"
+        response = list(product_builder.client.product_api.list_by_product(
+            builder_factory.resource_group, builder_factory.apim_instance, product_id
+        ))
+        assert any(api.id.endswith(api_id) for api in response)
+        assert response[0].id.endswith(api_id)
 
-    # yield
+    yield
 
-    # # Clean
-    # delete_result = product_builder.delete("basic")
-    # if delete_result["status"] == "error":
-    #     pytest.fail(f"Product deletion failed: {delete_result['message']}")
-    # else:
-    #     with pytest.raises(Exception):
-    #         product_builder.client.product_policy.get(
-    #             builder_factory.resource_group, builder_factory.apim_instance, product_id, api_id
-    #         )
+    # Clean
+    delete_result = product_builder.delete("basic")
+    if delete_result["status"] == "error":
+        pytest.fail(f"Product deletion failed: {delete_result['message']}")
+    else:
+        with pytest.raises(Exception):
+            product_builder.client.product_policy.get(
+                builder_factory.resource_group, builder_factory.apim_instance, product_id, api_id
+            )

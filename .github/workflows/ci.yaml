@@ -12,8 +12,6 @@ jobs:
     env:
       RESOURCE_GROUP: ${{ secrets.DEV_RESOURCE_GROUP }}
       SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
-      APIM_INSTANCE: ${{ secrets.DEV_APIM_INSTANCE }}
-      ENVIRONMENT: ${{ secrets.DEV_ENVIRONMENT }}
     steps:
 
       - name: "Az CLI login"
@@ -41,6 +39,9 @@ jobs:
 
       - name: Run Integration Tests
         shell: bash
+        env:
+          APIM_INSTANCE: euw-int-ai-dev-genai-apim
+          ENVIRONMENT: dev
         run: |
           cd api_management
           pytest tests/integration --cov=.

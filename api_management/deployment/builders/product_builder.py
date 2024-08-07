@@ -24,7 +24,6 @@ class ProductBuilder(BuilderBase):
                 apis_folder = os.path.join(product_path, "apis")
                 if os.path.exists(apis_folder):
                     for api_name in os.listdir(apis_folder):
-                        logger.info("Creating product %s with API %s", product_name, api_name)
                         self.client.product_api.create_or_update(
                             resource_group_name=self.resource_group,
                             service_name=self.apim_instance,

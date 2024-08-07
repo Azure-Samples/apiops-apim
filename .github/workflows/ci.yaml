@@ -45,7 +45,7 @@ jobs:
         shell: bash
         env:
           APIM_INSTANCE: euw-int-ai-dev-genai-apim
-          ENVIRONMENT: dev
+          ENVIRONMENT: integration_test
         run: |
           cd api_management
           pwd

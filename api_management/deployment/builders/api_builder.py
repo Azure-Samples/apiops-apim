@@ -1,4 +1,5 @@
 import os
+from azure.core.exceptions import HttpResponseError, ResourceNotFoundError
 from deployment.utils import load_json_file, load_text_file
 from deployment.logger import get_logger
 from deployment.builders.builder_base import BuilderBase
@@ -54,10 +55,16 @@ class ApiBuilder(BuilderBase):
                         logger.info(
                             f"Successfully deployed diagnostic {diagnostic_name} for API {api_name}"
                         )
+                    return {"status": "success", "message": "API deployed successfully"}
 
+        except HttpResponseError as e:
+            logger.error(
+                f"HTTP response error while deploying API {api_name}: {e.message}"
+            )
+            return {"status": "error", "message": e.message}
         except Exception as e:
             logger.error(f"Error deploying API {api_name}: {e}")
-            raise
+            return {"status": "error", "message": str(e)}
 
     def delete(self, resource_name: str):
         try:
@@ -86,6 +93,17 @@ class ApiBuilder(BuilderBase):
             )
             logger.info(f"Deleted API {resource_name}")
             logger.info("Please ensure the linked API resources are also deleted.")
+            return {"status": "success", "message": "API deleted successfully"}
+        except ResourceNotFoundError as e:
+            logger.error(
+                f"Resource not found error while deleting API {resource_name}: {e.message}"
+            )
+            return {"status": "error", "message": e.message}
+        except HttpResponseError as e:
+            logger.error(
+                f"HTTP response error while deleting API {resource_name}: {e.message}"
+            )
+            return {"status": "error", "message": e.message}
         except Exception as e:
             logger.error(f"Error deleting API {resource_name}: {e}")
-            raise
+            return {"status": "error", "message": str(e)}

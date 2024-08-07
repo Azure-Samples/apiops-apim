@@ -2,3 +2,5 @@ azure-identity
 azure-mgmt-apimanagement
 loguru
 pyYaml
+pytest
+pytest-cov

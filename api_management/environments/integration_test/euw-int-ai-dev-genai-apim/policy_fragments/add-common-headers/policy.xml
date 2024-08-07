@@ -1,0 +1,17 @@
+<!--
+    IMPORTANT:
+    - Policy fragment are included as-is whenever they are referenced.
+    - If using variables. Ensure they are setup before use.
+    - Copy and paste your code here or simply start coding
+-->
+<fragment>
+	<set-variable name="request-url" value="@(context.Request.Url.ToString())" />
+	<set-variable name="original-request-url" value="@(context.Request.OriginalUrl.ToString())" />
+	<set-header name="x-served-by-url" exists-action="append">
+		<value>@(context.Request.Url.Host)</value>
+	</set-header>
+	<set-header name="x-request-source" exists-action="append">
+		<value>@((String)context.Variables["original-request-url"])</value>
+	</set-header>
+	
+</fragment>

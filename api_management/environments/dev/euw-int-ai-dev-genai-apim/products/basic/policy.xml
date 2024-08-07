@@ -15,7 +15,7 @@
         <set-variable name="standby-pool" value="euw-int-ai-dev-genai-02-aoai" />
         
                 <azure-openai-token-limit counter-key="@(context.Subscription.Id)" tokens-per-minute="10000" estimate-prompt-tokens="false" remaining-tokens-header-name="x-oai-tpm-remaining-tokens" tokens-consumed-header-name="x-oai-tpm-tokens-consumed" />
-                <quota-by-key calls="1000" renewal-period="300" counter-key="@(context.Subscription.Id)" />
+                <quota-by-key calls="5000" renewal-period="3600" counter-key="@(context.Subscription.Id)" />
            
        
     </inbound>

@@ -1,0 +1,11 @@
+{
+    "properties": {
+      "displayName": "basic",
+      "description": "Basic plan",
+      "approvalRequired": false,
+      "state": "published",
+      "subscriptionRequired": true,
+      "subscriptionsLimit": 100,
+      "terms": ""
+    }
+  }

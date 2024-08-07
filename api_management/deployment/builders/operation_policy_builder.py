@@ -1,5 +1,5 @@
 import os
-from azure.mgmt.apimanagement import ApiManagementClient
+from azure.core.exceptions import HttpResponseError, ResourceNotFoundError
 from deployment.utils import load_text_file
 from deployment.logger import get_logger
 from deployment.builders.builder_base import BuilderBase
@@ -29,14 +29,23 @@ class OperationPolicyBuilder(BuilderBase):
                                 api_name, operation, operation_policy
                             )
             logger.info(f"Successfully deployed operation policies for {api_name}")
+            return {
+                "status": "success",
+                "message": f"Successfully deployed operation policies for {api_name}",
+            }
+        except HttpResponseError as e:
+            logger.error(
+                f"HTTP response error while deploying operation policies for {api_name}: {e.message}"
+            )
+            return {"status": "error", "message": e.message}
         except Exception as e:
             logger.error(f"Error deploying operation policies for {api_name}: {e}")
-            raise
+            return {"status": "error", "message": str(e)}
 
     def delete(self, resource_name: str):
         try:
             api_folder_base = os.path.join(
-                "environments", environment, self.apim_instance, "apis"
+                "environments", resource_name, self.apim_instance, "apis"
             )
             for api_name in os.listdir(api_folder_base):
                 api_path = os.path.join(api_folder_base, api_name)
@@ -52,9 +61,23 @@ class OperationPolicyBuilder(BuilderBase):
                             if_match="*",
                         )
             logger.info(f"Deleted operation policies for {resource_name}")
+            return {
+                "status": "success",
+                "message": f"Deleted operation policies for {resource_name}",
+            }
+        except ResourceNotFoundError as e:
+            logger.error(
+                f"Resource not found error while deleting operation policies for {resource_name}: {e.message}"
+            )
+            return {"status": "error", "message": e.message}
+        except HttpResponseError as e:
+            logger.error(
+                f"HTTP response error while deleting operation policies for {resource_name}: {e.message}"
+            )
+            return {"status": "error", "message": e.message}
         except Exception as e:
             logger.error(f"Error deleting operation policies for {resource_name}: {e}")
-            raise
+            return {"status": "error", "message": str(e)}
 
     def update_operation_policy(self, api_id, operation_id, policy):
         self.client.api_operation_policy.create_or_update(

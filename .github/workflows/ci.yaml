@@ -1,0 +1,62 @@
+name: Python Project Build and Test
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    env:
+      RESOURCE_GROUP: ${{ secrets.DEV_RESOURCE_GROUP }}
+      SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
+      APIM_INSTANCE: ${{ secrets.DEV_APIM_INSTANCE }}
+      ENVIRONMENT: ${{ secrets.DEV_ENVIRONMENT }}
+    steps:
+
+      - name: "Az CLI login"
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.DEV_CLIENT_ID }}
+          tenant-id: ${{ secrets.DEV_TENANT_ID }}
+          subscription-id: ${{ secrets.DEV_SUBSCRIPTION_ID }}
+          auth-type: SERVICE_PRINCIPAL
+          enable-AzPSSession: true
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Load Dependencies
+        shell: bash
+        run: |
+          set -e # fail on error
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Integration Tests
+        shell: bash
+        run: |
+          cd api_management
+          pytest tests/integration --cov=.
+
+      - name: Generate Coverage Report
+        shell: bash
+        run: |
+          coverage html
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: htmlcov/
+
+      - name: Display Coverage Report
+        if: always()
+        run: |
+          echo "Coverage report generated. To view the report, download the 'coverage-report' artifact and open the index.html file in a web browser."

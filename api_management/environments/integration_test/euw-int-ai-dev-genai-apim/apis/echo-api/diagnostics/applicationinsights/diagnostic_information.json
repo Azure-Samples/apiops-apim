@@ -1,6 +1,6 @@
 {
     "properties": {
-        "loggerId": "/subscriptions/9a4d2d39-1755-4be8-8ea6-b3bf32141bf7/resourceGroups/rg-ai-euw-dev/providers/Microsoft.ApiManagement/service/euw-int-ai-dev-genai-apim/loggers/apim-appinsightlogger",
+        "loggerId": "/subscriptions/1640ab47-b036-4934-bdcb-937d79e45473/resourceGroups/rg-apimpgs-dev-eastus/providers/Microsoft.ApiManagement/service/apim-apimpgs-dev-eastus/loggers/ai-apimpgs-dev-eastus",
         "alwaysLog": "allErrors",
         "metrics": true,
         "backend": {

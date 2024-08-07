@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build-and-test:
-    name: Build and Test
+    name: Build and Run Integration Tests
     runs-on: ubuntu-latest
     env:
       RESOURCE_GROUP: ${{ secrets.DEV_RESOURCE_GROUP }}

@@ -32,9 +32,14 @@ class ProductBuilder(BuilderBase):
                             api_id=api_name,
                         )
                 logger.info(f"Successfully deployed product {product_name}")
+            return {
+                "status": "success",
+                "message": "Successfully deployed product {product_name}",
+            }
         except Exception as e:
             logger.error(f"Error deploying product {product_name}: {e}")
             raise
+            return {"status": "error", "message": str(e)}
 
     def delete(self, resource_name: str):
         try:
@@ -47,9 +52,14 @@ class ProductBuilder(BuilderBase):
             )
 
             logger.info(f"Deleted product {resource_name}")
+            return {
+                "status": "success",
+                "message": f"Deleted product for {resource_name}",
+            }
         except Exception as e:
             logger.error(f"Error deleting product {resource_name}: {e}")
             raise
+            return {"status": "error", "message": str(e)}
 
     def update_product_policy(self, product_id, policy):
         try:

@@ -61,7 +61,6 @@ if __name__ == "__main__":
                 )
             else:
                 print(f"The file {args.deleted_files} does not exist.")
-
         # Deploy resources
         builders = [
             "apis",

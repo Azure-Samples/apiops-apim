@@ -56,7 +56,7 @@ def setup_and_teardown_api(builder_factory):
 def setup_and_teardown_product(builder_factory):
     product_builder = builder_factory.get_builder("products")
     environment = os.getenv("ENVIRONMENT", "integration_test")
-    api_id = "openai"
+    api_id = "echo-api"
     
     # Create Product
     result = product_builder.create(environment)

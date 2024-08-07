@@ -5,7 +5,7 @@ on:
     branches:
       - master
   workflow_dispatch:
-
+  
 permissions:
   id-token: write
   contents: read
@@ -13,8 +13,13 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      RESOURCE_GROUP: ${{ secrets.DEV_RESOURCE_GROUP }}
+      SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
+      APIM_INSTANCE: euw-int-ai-dev-genai-apim
+      ENVIRONMENT: dev
     steps:
-      - name: "Az CLI login"
+      - name: 'Az CLI login'
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.DEV_CLIENT_ID }}
@@ -22,6 +27,11 @@ jobs:
           subscription-id: ${{ secrets.DEV_SUBSCRIPTION_ID }}
           auth-type: SERVICE_PRINCIPAL
           enable-AzPSSession: true
+
+      - name: 'Run az commands'
+        run: |
+          az account show
+          az group list
 
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -31,7 +41,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.11"
+          python-version: '3.8'
 
       - name: Install dependencies
         run: |
@@ -43,13 +53,12 @@ jobs:
         run: |
           git fetch --depth=2 origin master
           git diff-tree --no-commit-id --name-only --diff-filter=D -r HEAD > api_management/deleted_files.txt
-          cat api_management/deleted_files.txt
+          cat  api_management/deleted_files.txt
 
       - name: Deploy APIs
-        run: |
-          cd api_management
-          python main.py
         env:
           APIM_INSTANCE: euw-int-ai-dev-genai-apim
           ENVIRONMENT: dev
-
+        run: |
+          cd api_management
+          python main.py

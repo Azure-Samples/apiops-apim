@@ -9,7 +9,6 @@ jobs:
   build-and-test:
     name: Build and Test
     runs-on: ubuntu-latest
-    environment: integeration_test
     env:
       RESOURCE_GROUP: ${{ secrets.DEV_RESOURCE_GROUP }}
       SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}

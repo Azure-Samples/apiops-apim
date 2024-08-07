@@ -52,19 +52,3 @@ jobs:
         run: |
           cd api_management
           pytest tests/integeration/ --cov=.
-
-      - name: Generate Coverage Report
-        shell: bash
-        run: |
-          coverage html
-
-      - name: Upload Coverage Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: htmlcov/
-
-      - name: Display Coverage Report
-        if: always()
-        run: |
-          echo "Coverage report generated. To view the report, download the 'coverage-report' artifact and open the index.html file in a web browser."

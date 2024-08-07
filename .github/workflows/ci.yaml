@@ -1,9 +1,13 @@
-name: Python Project Build and Test
+name: Run Integration Tests
 
 on:
   push:
     branches:
       - master
+
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   build-and-test:

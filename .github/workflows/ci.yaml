@@ -1,7 +1,7 @@
 name: Run Integration Tests
 
 on:
-  push:
+  pull_request:
     branches:
       - master
   workflow_dispatch:

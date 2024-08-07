@@ -86,10 +86,10 @@ class OperationPolicyBuilder(BuilderBase):
             api_id=api_id,
             operation_id=operation_id,
             policy_id="policy"
-            # parameters={
-            #     "properties": {
-            #         "format": "rawxml",
-            #         "value": policy,
-            #     }
-            # },
+            parameters={
+                "properties": {
+                    "format": "rawxml",
+                    "value": policy,
+                }
+            },
         )

@@ -17,8 +17,8 @@ def api_management_client():
 
 @pytest.fixture(scope="session")
 def builder_factory(api_management_client):
-    apim_instance = os.getenv("APIM_INSTANCE", "euw-int-ai-dev-genai-apim")
-    resource_group = os.getenv("RESOURCE_GROUP", "rg-ai-euw-dev")
+    apim_instance = os.getenv("APIM_INSTANCE", "apim-apimpgs-dev-eastus")
+    resource_group = os.getenv("RESOURCE_GROUP", "rg-apimpgs-dev-eastus")
     factory = BuilderFactory(api_management_client, resource_group, apim_instance)
     return factory
 

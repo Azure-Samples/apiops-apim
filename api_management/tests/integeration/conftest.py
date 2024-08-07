@@ -69,8 +69,8 @@ def setup_and_teardown_product(builder_factory):
         response = list(product_builder.client.product_api.list_by_product(
             builder_factory.resource_group, builder_factory.apim_instance, product_id
         ))
-        assert response[0].name == product_id
-
+        assert response is not None
+        assert response[0].name == api_id
     yield
 
     # Clean

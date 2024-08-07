@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: openai
+  title: echo-test
   description: ''
   version: '1.0'
 servers:

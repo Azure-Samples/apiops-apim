@@ -1,9 +1,9 @@
 name: Run Integration Tests
 
-on:
-  push:
-    branches:
-      - master
+# on:
+#   push:
+#     branches:
+#       - master
 
 permissions:
   id-token: write

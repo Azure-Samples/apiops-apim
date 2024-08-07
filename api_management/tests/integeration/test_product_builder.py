@@ -8,7 +8,7 @@ def test_create_product(builder_factory, setup_and_teardown_product):
 
     # Create product builder
     result = product_builder.create(environment)
-    api_id = "openai"
+    api_id = "echo-api"
     product_id = "basic"
     # Verify the product was created
     if result and result.get("status") == "error":

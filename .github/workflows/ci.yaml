@@ -48,6 +48,7 @@ jobs:
           ENVIRONMENT: dev
         run: |
           cd api_management
+          pwd
           pytest tests/integeration/ --cov=.
 
       - name: Generate Coverage Report

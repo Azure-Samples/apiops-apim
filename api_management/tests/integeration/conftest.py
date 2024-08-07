@@ -52,8 +52,8 @@ def setup_and_teardown_api(builder_factory):
                 builder_factory.resource_group, builder_factory.apim_instance, api_id
             )
 
-@pytest.fixture(scope="session", autouse=True)
-def setup_and_teardown_product(builder_factory):
+# @pytest.fixture(scope="session", autouse=True)
+# def setup_and_teardown_product(builder_factory):
     product_builder = builder_factory.get_builder("products")
     environment = os.getenv("ENVIRONMENT", "integration_test")
     api_id = "openai"

@@ -47,6 +47,7 @@ jobs:
           APIM_INSTANCE: euw-int-ai-dev-genai-apim
           ENVIRONMENT: integration_test
           RESOURCE_GROUP: rg-ai-euw-dev
+          SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
         run: |
           cd api_management
           pytest tests/integeration/ --cov=.

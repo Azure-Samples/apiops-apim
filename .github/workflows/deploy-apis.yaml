@@ -50,7 +50,6 @@ jobs:
           cd api_management
           python main.py
         env:
-          RESOURCE_GROUP: ${{ secrets.DEV_RESOURCE_GROUP }}
-          SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
-          APIM_INSTANCE: ${{ secrets.APIM_INSTANCE }}
-          ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+          APIM_INSTANCE: euw-int-ai-dev-genai-apim
+          ENVIRONMENT: dev
+

@@ -46,6 +46,7 @@ jobs:
         env:
           APIM_INSTANCE: euw-int-ai-dev-genai-apim
           ENVIRONMENT: integration_test
+          RESOURCE_GROUP: rg-ai-euw-dev
         run: |
           cd api_management
           pwd

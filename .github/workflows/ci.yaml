@@ -1,9 +1,6 @@
 name: Python Project Build and Test
 
 on:
-  # pull_request:
-  #   branches:
-  #     - master
   push:
     branches:
       - master
@@ -14,18 +11,18 @@ jobs:
     runs-on: ubuntu-latest
     environment: integeration_test
     env:
-      RESOURCE_GROUP: ${{ vars.RESOURCE_GROUP }}
-      SUBSCRIPTION_ID: ${{ vars.SUBSCRIPTION_ID }}
-      APIM_INSTANCE: ${{ vars.APIM_INSTANCE }}
-      ENVIRONMENT: ${{ vars.ENVIRONMENT }}
+      RESOURCE_GROUP: ${{ secrets.DEV_RESOURCE_GROUP }}
+      SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
+      APIM_INSTANCE: ${{ secrets.DEV_APIM_INSTANCE }}
+      ENVIRONMENT: ${{ secrets.DEV_ENVIRONMENT }}
     steps:
 
       - name: "Az CLI login"
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.CLIENT_ID }}
-          tenant-id: ${{ secrets.TENANT_ID }}
-          subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
+          client-id: ${{ secrets.DEV_CLIENT_ID }}
+          tenant-id: ${{ secrets.DEV_TENANT_ID }}
+          subscription-id: ${{ secrets.DEV_SUBSCRIPTION_ID }}
           auth-type: SERVICE_PRINCIPAL
           enable-AzPSSession: true
 

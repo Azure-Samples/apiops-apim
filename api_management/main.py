@@ -67,7 +67,7 @@ if __name__ == "__main__":
         builders = [
             "apis",
             "policy_fragments",
-            "products",
+            # "products",
             "operation_policy",
             "external_policy",
         ]

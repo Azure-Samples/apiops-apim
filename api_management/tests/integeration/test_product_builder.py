@@ -20,7 +20,7 @@ def test_create_product(builder_factory, setup_and_teardown_product):
             product_id
         ))
         assert response is not None
-        assert response[0].id == api_id
+        assert response[0].name == api_id
 
     # Clean up (Delete the product)
     delete_result = product_builder.delete("basic")

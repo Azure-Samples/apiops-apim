@@ -19,8 +19,8 @@ def test_create_product(builder_factory, setup_and_teardown_product):
             builder_factory.apim_instance,
             product_id
         ))
-        assert any(api.id.endswith(api_id) for api in response)
-        assert response[0].id.endswith(api_id)
+        assert response is not None
+        assert response[0].name == api_id
 
     # Clean up (Delete the product)
     delete_result = product_builder.delete("basic")

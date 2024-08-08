@@ -1,0 +1,37 @@
+{
+    "properties": {
+        "loggerId": "/subscriptions/1640ab47-b036-4934-bdcb-937d79e45473/resourceGroups/rg-apimpgs-dev-eastus/providers/Microsoft.ApiManagement/service/apim-apimpgs-dev-eastus/loggers/ai-apimpgs-dev-eastus",
+        "alwaysLog": "allErrors",
+        "metrics": true,
+        "backend": {
+            "request": {
+                "dataMasking": {
+                    "queryParams": [
+                        {
+                            "mode": "Hide",
+                            "value": "*"
+                        }
+                    ]
+                }
+            }
+        },
+        "frontend": {
+            "request": {
+                "dataMasking": {
+                    "queryParams": [
+                        {
+                            "mode": "Hide",
+                            "value": "*"
+                        }
+                    ]
+                }
+            }
+        },
+        "httpCorrelationProtocol": "Legacy",
+        "logClientIp": true,
+        "sampling": {
+            "percentage": 100,
+            "samplingType": "fixed"
+        }
+    }
+}

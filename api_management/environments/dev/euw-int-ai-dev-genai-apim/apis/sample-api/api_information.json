@@ -1,0 +1,14 @@
+{
+    "properties": {
+      "path": "/EchoSampleAPI",
+      "apiRevision": "1",
+      "isCurrent": true,
+      "displayName": "Echo Test Sample API",
+      "protocols": [
+        "https"
+      ],
+      "format": "openapi",
+      "subscriptionRequired": true
+    }
+  }
+  

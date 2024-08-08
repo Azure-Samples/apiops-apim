@@ -1,8 +1,5 @@
 <fragment>
 	<retry condition="@(context.Response.StatusCode == 429)" count="3" interval="1" max-interval="10" delta="2">
-		<set-header name="Authorization" exists-action="override">
-					<value>@("Bearer " + (string)context.Variables["msi-access-token"])</value>
-		</set-header>
 		<choose>
 			<when condition="@(context.Response.StatusCode == 429)">
 				<set-backend-service backend-id="@((string)context.Variables["standby-pool"])" />

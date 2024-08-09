@@ -20,16 +20,3 @@ def test_create_product(builder_factory, setup_and_teardown_product):
         ))
         assert response is not None
         assert response[0].name == api_id
-
-    # Clean up (Delete the product)
-    delete_result = product_builder.delete("basic")
-    if delete_result and delete_result.get("status") == "error":
-        pytest.fail(f"Product deletion failed: {delete_result['message']}")
-    else:
-        with pytest.raises(Exception):
-            product_builder.client.product_policy.get(
-                builder_factory.resource_group,
-                builder_factory.apim_instance,
-                product_id,
-                api_id,
-            )

@@ -6,20 +6,24 @@ from deployment.factory import BuilderFactory
 
 
 @pytest.fixture(scope="session")
-def api_management_client():
-    subscription_id = os.getenv(
-        "SUBSCRIPTION_ID", "1640ab47-b036-4934-bdcb-937d79e45473"
-    )
+def subscription_id():
+    return os.getenv("SUBSCRIPTION_ID", "1640ab47-b036-4934-bdcb-937d79e45473")
+
+
+@pytest.fixture(scope="session")
+def api_management_client(subscription_id):
     credential = DefaultAzureCredential()
     client = ApiManagementClient(credential, subscription_id)
     return client
 
 
 @pytest.fixture(scope="session")
-def builder_factory(api_management_client):
-    apim_instance = os.getenv("APIM_INSTANCE", "euw-int-ai-dev-genai-apim")
-    resource_group = os.getenv("RESOURCE_GROUP", "rg-ai-euw-dev")
-    factory = BuilderFactory(api_management_client, resource_group, apim_instance)
+def builder_factory(api_management_client, subscription_id):
+    apim_instance = os.getenv("APIM_INSTANCE", "apim-apimpgs-dev-eastus")
+    resource_group = os.getenv("RESOURCE_GROUP", "rg-apimpgs-dev-eastus")
+    factory = BuilderFactory(
+        api_management_client, resource_group, apim_instance, subscription_id
+    )
     return factory
 
 
@@ -52,23 +56,30 @@ def setup_and_teardown_api(builder_factory):
                 builder_factory.resource_group, builder_factory.apim_instance, api_id
             )
 
+
 @pytest.fixture(scope="session", autouse=True)
 def setup_and_teardown_product(builder_factory):
     product_builder = builder_factory.get_builder("products")
     environment = os.getenv("ENVIRONMENT", "integration_test")
     api_id = "echo-api"
-    
+
     # Create Product
     result = product_builder.create(environment)
     if result is None:
         pytest.fail("Product creation returned None")
     if result.get("status") == "error":
-        pytest.fail(f"Product creation failed: {result.get('message', 'Unknown error')}")
+        pytest.fail(
+            f"Product creation failed: {result.get('message', 'Unknown error')}"
+        )
     else:
         product_id = "basic"
-        response = list(product_builder.client.product_api.list_by_product(
-            builder_factory.resource_group, builder_factory.apim_instance, product_id
-        ))
+        response = list(
+            product_builder.client.product_api.list_by_product(
+                builder_factory.resource_group,
+                builder_factory.apim_instance,
+                product_id,
+            )
+        )
         assert response is not None
         assert response[0].name == api_id
     yield
@@ -80,5 +91,8 @@ def setup_and_teardown_product(builder_factory):
     else:
         with pytest.raises(Exception):
             product_builder.client.product_policy.get(
-                builder_factory.resource_group, builder_factory.apim_instance, product_id, api_id
+                builder_factory.resource_group,
+                builder_factory.apim_instance,
+                product_id,
+                api_id,
             )

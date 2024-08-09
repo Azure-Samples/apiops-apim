@@ -1,0 +1,20 @@
+{
+    "properties": {
+        "type": "Pool",
+        "description": "Creating a pool of backends with backend id euw-int-ai-dev-genai-01-aoai and euw-int-ai-dev-genai-02-aoai",
+        "pool": {
+            "services": [
+                {
+                    "id": "/subscriptions/9a4d2d39-1755-4be8-8ea6-b3bf32141bf7/resourceGroups/rg-ai-euw-dev/providers/Microsoft.ApiManagement/service/euw-int-ai-dev-genai-apim/backends/euw-int-ai-dev-genai-01-aoai",
+                    "priority": 10,
+                    "weight": 50
+                },
+                {
+                    "id": "/subscriptions/9a4d2d39-1755-4be8-8ea6-b3bf32141bf7/resourceGroups/rg-ai-euw-dev/providers/Microsoft.ApiManagement/service/euw-int-ai-dev-genai-apim/backends/euw-int-ai-dev-genai-02-aoai",
+                    "priority": 20,
+                    "weight": 50
+                }
+            ]
+        }
+    }
+}

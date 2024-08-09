@@ -1,0 +1,19 @@
+{
+    "properties": {
+        "type": "Pool",
+        "pool": {
+            "services": [
+                {
+                    "id": "/subscriptions/1640ab47-b036-4934-bdcb-937d79e45473/resourceGroups/rg-apimpgs-dev-eastus/providers/Microsoft.ApiManagement/service/apim-apimpgs-dev-eastus/backends/payg-backend-1",
+                    "priority": 10,
+                    "weight": 50
+                },
+                {
+                    "id": "/subscriptions/1640ab47-b036-4934-bdcb-937d79e45473/resourceGroups/rg-apimpgs-dev-eastus/providers/Microsoft.ApiManagement/service/apim-apimpgs-dev-eastus/backends/payg-backend-2",
+                    "priority": 20,
+                    "weight": 50
+                }
+            ]
+        }
+    }
+}

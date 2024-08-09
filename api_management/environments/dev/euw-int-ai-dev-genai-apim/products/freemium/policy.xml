@@ -27,6 +27,5 @@
     <!-- Handle exceptions and customize error responses  -->
     <on-error>
         <base />
-        <include-fragment fragment-id="replay-on-error" />
     </on-error>
 </policies>

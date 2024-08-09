@@ -8,7 +8,8 @@
 	<choose>
 		<when condition="@(context.LastError.Source == "quota-by-key")">
 			<set-variable name="replay-url" value="@("http://" + context.Request.Headers.GetValueOrDefault("X-Original-Host") + context.Request.Headers.GetValueOrDefault("X-Original-Url"))" />
-			<set-variable name="original-error-reason" value="@(context.LastError.Source)" />
+			<set-variable name="original-error-source" value="@(context.LastError.Source)" />
+            <set-variable name="original-error-reason" value="@(context.LastError.Reason)" />
 			<!-- In case of throttling from Policy, we replay the same request again to APIM without quota policies check now -->
 			<send-request mode="copy" response-variable-name="replay-response" timeout="60" ignore-error="false">
 				<set-url>@(context.Variables.GetValueOrDefault<string>("replay-url"))</set-url>
@@ -22,6 +23,9 @@
 				<set-header name="x-request-replayed" exists-action="override">
 					<value>true</value>
 				</set-header>
+                <set-header name="x-original-error-source" exists-action="override">
+					<value>@(context.Variables.GetValueOrDefault<string>("original-error-source"))</value>
+				</set-header>
 				<set-header name="x-original-error-reason" exists-action="override">
 					<value>@(context.Variables.GetValueOrDefault<string>("original-error-reason"))</value>
 				</set-header>
@@ -30,12 +34,6 @@
 		<otherwise>
 			<set-header name="x-request-replayed" exists-action="override">
 				<value>"false"</value>
-			</set-header>
-			<set-header name="context-error-reason" exists-action="override">
-				<value>@(context.LastError.Reason)</value>
-			</set-header>
-			<set-header name="context-error-source" exists-action="override">
-				<value>@(context.LastError.Source)</value>
 			</set-header>
 		</otherwise>
 	</choose>

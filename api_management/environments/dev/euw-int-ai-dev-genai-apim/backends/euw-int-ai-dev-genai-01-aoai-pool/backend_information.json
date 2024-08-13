@@ -1,7 +1,7 @@
 {
     "properties": {
         "type": "Pool",
-        "description": "Creating a pool of backends with backend id euw-int-ai-dev-genai-01-aoai and euw-int-ai-dev-genai-02-aoai",
+        "description": "Creating a pool of backends with backend id deployment-1-0 and deployment-1-1",
         "pool": {
             "services": [
                 {

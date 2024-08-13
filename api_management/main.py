@@ -47,7 +47,7 @@ if __name__ == "__main__":
         credential = DefaultAzureCredential()
         client = ApiManagementClient(credential, subscription_id)
 
-        builder_factory = BuilderFactory(client, resource_group, apim_instance)
+        builder_factory = BuilderFactory(client, resource_group, apim_instance, subscription_id)
 
         # Handle deleted resources
         if args.deleted_files:
@@ -65,6 +65,7 @@ if __name__ == "__main__":
                 print(f"The file {args.deleted_files} does not exist.")
         # Deploy resources
         builders = [
+            "backends",
             "apis",
             "policy_fragments",
             "products",

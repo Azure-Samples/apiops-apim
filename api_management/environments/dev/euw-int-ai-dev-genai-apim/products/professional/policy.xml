@@ -12,7 +12,7 @@
             <message>@("Subscription "+context.Subscription.Name+" called "+context.Product.Name+" product")</message>
         </trace>
         <set-variable name="backend-pool" value="euw-int-ai-dev-genai-01-aoai-pool" />
-        <set-variable name="standby-pool" value="euw-int-ai-dev-genai-03-aoai" />
+        <set-variable name="standby-pool" value="deployment-1-2" />
         <azure-openai-token-limit counter-key="@(context.Subscription.Id)" tokens-per-minute="20000" estimate-prompt-tokens="false" remaining-tokens-header-name="x-oai-tpm-remaining-tokens" tokens-consumed-header-name="x-oai-tpm-tokens-consumed" />
         <quota-by-key calls="1000" renewal-period="1800" counter-key="@(context.Subscription.Id)" />
     </inbound>
